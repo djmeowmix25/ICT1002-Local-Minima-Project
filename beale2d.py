@@ -1,3 +1,4 @@
+
 def valueonly_beale2d(dim, x):
     if (dim != 2):
         print("Dim is not 2")
@@ -11,7 +12,7 @@ def valueonly_beale2d(dim, x):
     return ret
 
 
-def valueandderivatives_beale2d(dim, x):
+def valueandderivatives_beale2d(dim, x, grad, hessian_vecshaped):
     if (dim != 2):
         print("dim is not 2")
         exit(2)
