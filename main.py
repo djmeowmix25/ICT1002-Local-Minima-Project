@@ -1,8 +1,11 @@
-import numpy as np
-import matplotlib.pyplot as plt
+#import numpy as np
+#import matplotlib.pyplot as plt
+global hessian_vecshaped 
+hessian_vecshaped = [0,0,0,0]
+global grad
+grad = [0,0]
 
-
-def valueonly_beale2d(dim, x[]):
+def valueonly_beale2d(dim, x):
     if (dim != 2):
         print("Dim is not 2")
 
@@ -15,18 +18,10 @@ def valueonly_beale2d(dim, x[]):
     return ret
 
 
-def valueandderivatives_beale2d(dim, x, grad, hessian_vecshaped):
+def valueandderivatives_beale2d(dim, x):
     if (dim != 2):
-        print("dim is not 2, but %d\n" (dim))
+        print("dim is not 2")
         exit(2)
-
-    if (grad == NULL):
-        print("valueandderivatives_beale2d: grad == NULL\n")
-        exit(10)
-
-    if (hessian_vecshaped == NULL):
-        print("valueandderivatives_beale2d: hessian_vecshaped == NULL\n")
-        exit(11)
 
     ret = valueonly_beale2d(dim, x)
 
@@ -52,4 +47,17 @@ def valueandderivatives_beale2d(dim, x, grad, hessian_vecshaped):
     return ret
 
 
+
+    
+
 def main():
+    x = [2, 0.5]
+    #double = valueonly_beale2d(2, x)
+    double = valueandderivatives_beale2d(2, x)
+    print(double)
+    print(hessian_vecshaped)
+    print(grad)
+    
+
+
+main()
