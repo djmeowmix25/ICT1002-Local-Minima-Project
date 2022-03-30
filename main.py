@@ -17,10 +17,12 @@ def main():
     print(hessian_vecshaped)
     print(grad)
     
+    
+    
     hessian_vecshaped = [0,0,0,0]
     grad = [0,0]
-    
-    y = [0,0]
+    y = [i,j]
+    print (i, j)
     double2 = matyas.valueandderivatives_matyas(2, y, grad, hessian_vecshaped)
     print(double2)
     print(hessian_vecshaped)
