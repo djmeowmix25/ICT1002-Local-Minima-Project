@@ -1,5 +1,5 @@
 
-def valueonly_matyas(dim, x):
+def valueonly(dim, x):
     if (dim != 2):
         print("Dim is not 2")
 
@@ -11,25 +11,23 @@ def valueonly_matyas(dim, x):
     return ret
 
 
-def valueandderivatives_matyas(dim, x, grad, hessian_vecshaped):
+def valueandderivatives(dim, x, grad, hessian_vecshaped):
     if (dim != 2):
         print("dim is not 2")
         exit(2)
 
-    ret = valueonly_matyas(dim, x)
+    ret = valueonly(dim, x)
 
     # gradient
     grad[0] = 0.52*x[0] - 0.48*x[1]
     grad[1] = 0.52*x[1] - 0.48*x[0]
 
-  
+
     hessian_vecshaped[0+2*0] = 0.52
     hessian_vecshaped[1+2*1] = 0.52
-  
+
     hessian_vecshaped[1+2*0] = -0.48
-                          
-    hessian_vecshaped[0+2*1] = hessian_vecshaped[1+2*0]; 
-    
+
+    hessian_vecshaped[0+2*1] = hessian_vecshaped[1+2*0];
+
     return ret
-
-
