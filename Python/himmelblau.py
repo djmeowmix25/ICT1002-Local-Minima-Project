@@ -1,9 +1,9 @@
-# global hessian_vecshaped 
+# global hessian_vecshaped
 # hessian_vecshaped = [0,0,0,0]
 # global grad
 # grad = [0,0]
 
-def valueonly_himmelblau(dim, x):
+def valueonly(dim, x):
     if (dim != 2):
         print("Dim is not 2")
 
@@ -15,7 +15,7 @@ def valueonly_himmelblau(dim, x):
     return ret
 
 
-def valueandderivatives_himmelblau(dim, x):
+def valueandderivatives(dim, x):
     if (dim != 2):
         print("dim is not 2")
         exit(2)
@@ -32,8 +32,8 @@ def valueandderivatives_himmelblau(dim, x):
     hessian_vecshaped[0+2*0] = (4 * x[0] * 2 * x[0]) + (2 * p1 * 2) + 2
     hessian_vecshaped[1+2*1] = 2 + (2 * p2 * 2) + (4 * x[1] * 2 * x[1])
     hessian_vecshaped[1+2*0] = (4 * x[0]) + (4 * x[1])
-    hessian_vecshaped[0+2*1] = hessian_vecshaped[1+2*0]; 
-    
+    hessian_vecshaped[0+2*1] = hessian_vecshaped[1+2*0];
+
     return ret
 
 # x = [-5, 5]

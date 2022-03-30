@@ -4,6 +4,7 @@
 import time
 import beale2d
 import matyas
+import himmelblau
 
 global hessian_vecshaped
 global grad
