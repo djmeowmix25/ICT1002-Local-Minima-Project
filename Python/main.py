@@ -46,35 +46,63 @@ def gradient_newton(x_vector, hessian_vecshaped, epsilon, grad):
         x_vector[i] = x_vector[i] - matrix[i][i]  * grad[i]
     return x_vector
 
+def checker (x, domain, grad):
+    counter = 0 
+    for i in range(len(x)):
+        if x[i] <= domain[0]:
+            counter+=1
+            if grad[i] > 0:
+                print("Terminated x hit lower domain")
+                exit()
+            
+        elif x[i] >= domain[1]:
+            counter+=1
+            tempGrad = -1 * grad[i]
+            if tempGrad > 0:
+                print("Terminated x hit upper domain")
+                exit()
+    
+    if counter >=2:
+        print("Two or more")
+        exit()
+        
+
+
 def main():
     #x = [3, 0.5]
 
     # set by user
     step = 0.01 # step
     a = 0.5 # moment
-    x = [0,0] # starting vector
+    x = [-4,4] # starting vector
+    domain = [-5, 5]
     epsilon  = 0.00001 # epsilon
 
     # used by algo
     m = [0,0] # gradient momentum
     lowest = 99999999999
+    
 
     while(True):
         fx = valueandderivatives(2, x, grad, hessian_vecshaped)
         #x = gradient_newton(x, hessian_vecshaped, epsilon, grad)
         #x, m = gradient_momentum(x, m, a, step, grad)
         x = gradient_simple(x, step, grad)
+        print(x)
+        checker (x, domain, grad)
 
         # Check for x within boundary
         # for i in x:
         #     if(x )
 
         print(f"f(x): {fx}\tx1: {x[0]}\tx2: {x[1]}\tGrad1: {grad[0]}\tGrad2: {grad[1]}")
-        # if(fx < lowest):
-        #     lowest = fx
-        # else:
-        #     break
-        time.sleep(0.1)
+        if(fx < lowest):
+            lowest = fx
+        else:
+            break
+        time.sleep(0.01)
+        
+        
 
 if __name__ == "__main__":
     main()
