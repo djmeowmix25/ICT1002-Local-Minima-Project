@@ -15,12 +15,12 @@ def valueonly(dim, x):
     return ret
 
 
-def valueandderivatives(dim, x):
+def valueandderivatives(dim, x, grad, hessian_vecshaped):
     if (dim != 2):
         print("dim is not 2")
         exit(2)
 
-    ret = valueonly_himmelblau(dim, x)
+    ret = valueonly(dim, x)
 
     # gradient
     p1 = 2 * (x[0] * x[0] + x[1] - 11)

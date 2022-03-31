@@ -2,9 +2,9 @@
 #import matplotlib.pyplot as plt
 # test functions
 import time
-import beale2d
-import matyas
-import himmelblau
+#from beale2d import valueandderivatives, valueonly
+#from matyas import valueandderivatives, valueonly
+from himmelblau import valueandderivatives, valueonly
 
 global hessian_vecshaped
 global grad
@@ -19,13 +19,13 @@ def plain_gradient_simple(x_vector, step, grad):
 
 def main():
     #x = [3, 0.5]
-    step = 0.01
-    x = [0,0]
+    step = 0.001
+    x = [-5,5]
     lowest = 99999999999
 
     while(True):
         x = plain_gradient_simple(x, step, grad)
-        fx = beale2d.valueandderivatives(2, x, grad, hessian_vecshaped)
+        fx = valueandderivatives(2, x, grad, hessian_vecshaped)
         print(f"f(x): {fx}\tx1: {x[0]}\tx2: {x[1]}\tGrad1: {grad[0]}\tGrad2: {grad[1]}")
         if(fx < lowest):
             lowest = fx
