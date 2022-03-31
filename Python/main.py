@@ -3,9 +3,9 @@ import time
 #import matplotlib.pyplot as plt
 
 ### CHOOSE 1 TO IMPORT, COMMENT OUT THE REST
-#from beale2d import valueandderivatives, valueonly
+from beale2d import valueandderivatives, valueonly
 #from matyas import valueandderivatives, valueonly
-from himmelblau import valueandderivatives, valueonly
+#from himmelblau import valueandderivatives, valueonly
 
 global hessian_vecshaped
 global grad
@@ -72,17 +72,18 @@ def main():
     #x = [3, 0.5]
 
     # set by user
-    step = 0.01 # step
+    step = 0.05 # step
     a = 0.5 # moment
-    x = [-4,4] # starting vector
-    domain = [-5, 5]
+    x = [0,0] # starting vector
+    domain = [-4.5, 4.5]
     epsilon  = 0.00001 # epsilon
 
     # used by algo
     m = [0,0] # gradient momentum
     lowest = 99999999999
     
-
+    with open("steps.txt", "w") as f:
+        f.write('')
     while(True):
         fx = valueandderivatives(2, x, grad, hessian_vecshaped)
         #x = gradient_newton(x, hessian_vecshaped, epsilon, grad)
@@ -96,10 +97,17 @@ def main():
         #     if(x )
 
         print(f"f(x): {fx}\tx1: {x[0]}\tx2: {x[1]}\tGrad1: {grad[0]}\tGrad2: {grad[1]}")
-        if(fx < lowest):
-            lowest = fx
-        else:
+
+
+        with open("steps.txt", "a") as f:
+            #f.write(f'f(x): {round(fx, 5)}\tx1: {round(x[0], 5)}\tx2: {round(x[1], 5)}\t\n')
+            f.write(f'f(x): {fx}\tx1: {x[0]}\tx2: {x[1]}\t\n')
+
+        lowest = fx
+        if(fx < 0.0001):
             break
+        # else:
+        #     break
         time.sleep(0.01)
         
         
