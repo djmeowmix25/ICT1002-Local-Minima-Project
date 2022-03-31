@@ -3,8 +3,8 @@ import time
 #import matplotlib.pyplot as plt
 
 ### CHOOSE 1 TO IMPORT, COMMENT OUT THE REST
-from beale2d import valueandderivatives, valueonly
-#from matyas import valueandderivatives, valueonly
+#from beale2d import valueandderivatives, valueonly
+from matyas import valueandderivatives, valueonly
 #from himmelblau import valueandderivatives, valueonly
 
 global hessian_vecshaped
@@ -74,8 +74,8 @@ def main():
     # set by user
     step = 0.05 # step
     a = 0.5 # moment
-    x = [0,0] # starting vector
-    domain = [-4.5, 4.5]
+    x = [-1,1] # starting vector
+    domain = [-10, 10]
     epsilon  = 0.00001 # epsilon
 
     # used by algo
