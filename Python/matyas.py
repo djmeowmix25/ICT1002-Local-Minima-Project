@@ -23,11 +23,11 @@ def valueandderivatives(dim, x, grad, hessian_vecshaped):
     grad[1] = 0.52*x[1] - 0.48*x[0]
 
 
-    hessian_vecshaped[0+2*0] = 0.52
-    hessian_vecshaped[1+2*1] = 0.52
+    hessian_vecshaped[0][0] = 0.52
+    hessian_vecshaped[1][1] = 0.52
 
-    hessian_vecshaped[1+2*0] = -0.48
+    hessian_vecshaped[0][1] = -0.48
 
-    hessian_vecshaped[0+2*1] = hessian_vecshaped[1+2*0];
+    hessian_vecshaped[1][0] = hessian_vecshaped[0][1];
 
     return ret

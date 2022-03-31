@@ -29,10 +29,10 @@ def valueandderivatives(dim, x, grad, hessian_vecshaped):
     grad[0] = 2 * p1 * 2 * x[0] + 2 * p2
     grad[1] = 2 * p1 + 2 * p2 * 2 * x[1]
 
-    hessian_vecshaped[0+2*0] = (4 * x[0] * 2 * x[0]) + (2 * p1 * 2) + 2
-    hessian_vecshaped[1+2*1] = 2 + (2 * p2 * 2) + (4 * x[1] * 2 * x[1])
-    hessian_vecshaped[1+2*0] = (4 * x[0]) + (4 * x[1])
-    hessian_vecshaped[0+2*1] = hessian_vecshaped[1+2*0];
+    hessian_vecshaped[0][0] = (4 * x[0] * 2 * x[0]) + (2 * p1 * 2) + 2
+    hessian_vecshaped[1][1] = 2 + (2 * p2 * 2) + (4 * x[1] * 2 * x[1])
+    hessian_vecshaped[0][1] = (4 * x[0]) + (4 * x[1])
+    hessian_vecshaped[1][0] = hessian_vecshaped[0][1];
 
     return ret
 

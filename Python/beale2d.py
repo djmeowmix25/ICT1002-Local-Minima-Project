@@ -31,11 +31,11 @@ def valueandderivatives(dim, x, grad, hessian_vecshaped):
     q2 = -1+x[1]*x[1]
     q3 = -1+x[1]*x[1] *x[1]
 
-    hessian_vecshaped[0+2*0] = 2*q1*q1 + 2*q2*q2 + 2*q3*q3
-    hessian_vecshaped[1+2*1] = 2*x[0]*x[0] + 8*x[0]*x[0]*x[1]*x[1] + 2*p2*2*x[0] + 18*x[0]*x[0]*x[1]*x[1]*x[1]*x[1] + 2*p3*6*x[0]*x[1]
+    hessian_vecshaped[0][0] = 2*q1*q1 + 2*q2*q2 + 2*q3*q3
+    hessian_vecshaped[1][1] = 2*x[0]*x[0] + 8*x[0]*x[0]*x[1]*x[1] + 2*p2*2*x[0] + 18*x[0]*x[0]*x[1]*x[1]*x[1]*x[1] + 2*p3*6*x[0]*x[1]
 
-    hessian_vecshaped[1+2*0] = 2*x[0]*q1 +2*p1 + 4*x[0]*x[1]*q2 + 2*p2*2*x[1] + 6*x[0]*x[1]*x[1]*q3 + 2*p3*3*x[1]*x[1]
+    hessian_vecshaped[0][1] = 2*x[0]*q1 +2*p1 + 4*x[0]*x[1]*q2 + 2*p2*2*x[1] + 6*x[0]*x[1]*x[1]*q3 + 2*p3*3*x[1]*x[1]
 
-    hessian_vecshaped[0+2*1] = hessian_vecshaped[1+2*0];
+    hessian_vecshaped[1][0] = hessian_vecshaped[0][1];
 
     return ret
