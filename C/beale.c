@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-double valueonly_beale2d( int dim, double *x
+double valueonly( int dim, double *x
 );
-double valueandderivatives_beale2d( int dim, double *x , double* grad,
+double valueandderivatives( int dim, double *x , double* grad,
 double *hessian_vecshaped
 );
 
-double valueonly_beale2d( int dim, double *x)
+double valueonly( int dim, double *x)
 {
   if (dim !=2)
   {
@@ -26,7 +26,7 @@ double valueonly_beale2d( int dim, double *x)
   return ret;
 }
 
-double valueandderivatives_beale2d( int dim, double *x , double* grad,
+double valueandderivatives( int dim, double *x , double* grad,
 double *hessian_vecshaped)
 {
   if (dim !=2)
@@ -46,7 +46,7 @@ double *hessian_vecshaped)
     exit(11);  
   }
   
-  double ret  = valueonly_beale2d( dim, x);
+  double ret  = valueonly( dim, x);
   
   double p1,p2,p3;
   

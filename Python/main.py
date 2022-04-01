@@ -5,8 +5,13 @@ import pickle
 
 ### CHOOSE 1 TO IMPORT, COMMENT OUT THE REST
 #from beale2d import valueandderivatives, valueonly
+<<<<<<< HEAD
 #from matyas import valueandderivatives, valueonly
 from himmelblau import valueandderivatives, valueonly
+=======
+from matyas import valueandderivatives, valueonly
+#from himmelblau import valueandderivatives, valueonly
+>>>>>>> 620fd1ee4e53f83dfeda505b390fc070a92a92dd
 
 global hessian_vecshaped
 global grad
@@ -80,9 +85,15 @@ def main():
     # set by user
     step = 0.01 # step
     a = 0.5 # moment
+<<<<<<< HEAD
     x = [4,2] # starting vector
     domain = [-5, 5] # domain
     epsilon  = 0.01 # epsilon
+=======
+    x = [-1,1] # starting vector
+    domain = [-10, 10]
+    epsilon  = 0.00001 # epsilon
+>>>>>>> 620fd1ee4e53f83dfeda505b390fc070a92a92dd
 
     # used by algo
     m = [0,0] # gradient momentum
