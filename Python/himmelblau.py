@@ -23,8 +23,8 @@ def valueandderivatives(dim, x, grad, hessian_vecshaped):
     ret = valueonly(dim, x)
 
     # gradient
-    p1 = 2 * (x[0] * x[0] + x[1] - 11)
-    p2 = 2 * (x[0] + x[1] * x[1] - 7)
+    p1 = x[0] * x[0] + x[1] - 11
+    p2 = x[0] + x[1] * x[1] - 7
 
     grad[0] = 2 * p1 * 2 * x[0] + 2 * p2
     grad[1] = 2 * p1 + 2 * p2 * 2 * x[1]
