@@ -1,7 +1,3 @@
-# global hessian_vecshaped
-# hessian_vecshaped = [0,0,0,0]
-# global grad
-# grad = [0,0]
 
 def valueonly(dim, x):
     if (dim != 2):
@@ -35,12 +31,3 @@ def valueandderivatives(dim, x, grad, hessian_vecshaped):
     hessian_vecshaped[1][0] = hessian_vecshaped[0][1];
 
     return ret
-
-# x = [-5, 5]
-
-# for i in range (-5, 5, 1):
-#     x = [i, i+1]
-#     double = valueandderivatives_himmelblau(2, x)
-#     print(double)
-#     print(hessian_vecshaped)
-#     print(grad)
