@@ -6,7 +6,7 @@ double valueonly( int dim, double *x
 double valueandderivatives( int dim, double *x , double* grad,
 double *hessian_vecshaped
 );
-
+double * returnDomain();
 
 double valueonly( int dim, double *x)
 {
@@ -60,5 +60,12 @@ double *hessian_vecshaped)
                        
   return ret;
   
+}
+
+double * returnDomain(double * domain){
+  domain[0] = -10;
+  domain[1] = 10;
+
+  return domain;
 }
 

@@ -1,5 +1,10 @@
+#include <string.h>
+#include <stdio.h>
+#include <ctype.h>
+
+
 double* gradient_simple(double* x_vector[], double step, double* grad[]);
-double* gradient_momentum(double* x_vector[], double step, double* grad[], double* m[], double a);
+// double* gradient_momentum(double* x_vector[], double step, double* grad[], double* m[], double a);
 
 
 
@@ -12,11 +17,11 @@ double* gradient_simple(double* x_vector[], double step, double* grad[]){
 
 }
 
-double* gradient_momentum(double* x_vector[], double step, double* grad[], double* m[], double a){
-    for(int i=0; i<len(*x_vector); i++){
-        *m[i] = a * (*m[i]) + step * (*grad[i])
-        *x_vector[i] = *x_vector[i] - step * (*grad[i]);
-    }
+// double* gradient_momentum(double* x_vector[], double step, double* grad[], double* m[], double a){
+//     for(int i=0; i<len(*x_vector); i++){
+//         *m[i] = a * (*m[i]) + step * (*grad[i])
+//         *x_vector[i] = *x_vector[i] - step * (*grad[i]);
+//     }
 
-    return x_vector, m;
-}
+//     return x_vector;
+// }

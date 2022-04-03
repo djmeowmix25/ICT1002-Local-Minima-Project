@@ -78,9 +78,3 @@ double *hessian_vecshaped)
 }
 
 
-
-int main()
-{
-  //plotovergrid2d( "./griddata.txt");
-  return 0;
-}
