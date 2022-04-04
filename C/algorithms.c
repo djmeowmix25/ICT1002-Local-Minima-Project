@@ -6,11 +6,11 @@ void gradient_simple(double *x, double step, double *grad){
     }
 }
 
-void gradient_momentum(double *x, double *m, double step, double *grad, double a){
+void gradient_momentum(double *x, double *m, double step, double *grad, double al){
     unsigned int size = sizeof(x) / sizeof(x[0])
 
     for(int i = 0; i < size; i++){
-        m[i] = a * (m[i]) + step * (grad[i]);
+        m[i] = al * (m[i]) + step * (grad[i]);
         x[i] = x[i] - m[i];
     }
 }
