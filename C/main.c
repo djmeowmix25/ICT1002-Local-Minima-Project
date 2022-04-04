@@ -83,7 +83,7 @@ double getStep()
     {
         printf("Recommended step size is between 0.1 to 0.0001\n");
         printf("Please enter a step size :\n");
-        status = scanf("%lf", &stepSize);
+        status = scanf("%lf", &step);
         printf("\n");
 
         if (status != 1)
@@ -105,14 +105,14 @@ double getMomentum()
     do
     {
         printf("Please enter a momentum term value between 0 and 1 :\n");
-        status = scanf("%lf", &alpha);
+        status = scanf("%lf", &al);
         printf("\n");
 
         if (status != 1)
         {
             printf("ERROR: Please enter a real number\n");
         }
-        else if (alpha <= 0 || alpha >= 1)
+        else if (al <= 0 || al >= 1)
         {
             printf("ERROR: Please input proper momentum term value\n");
         }
@@ -156,9 +156,9 @@ void getDomain(int *domain)
     do
     {
         printf("Please enter the domain inclusive from: \n");
-        status1 = scanf("%d", domain[0])
+        status1 = scanf("%d", &domain[0]);
         printf("Please enter the domain inclusive to: \n");
-        status2 = scanf("%d", domain[1]);
+        status2 = scanf("%d", &domain[1]);
         printf("\n");
 
         if (status1 != 1 || status2 != 1)
@@ -178,11 +178,12 @@ void getDomain(int *domain)
 
 void getStart(int dim, int *domain, double *startingVector)
 {
+    int status;
     for (int i = 0; i < dim; i++)
     {
         do {
           printf("Please enter starting vector value x%d: \n", (i+1));
-          status = scanf("%lf", startingVector[i]);
+          status = scanf("%lf", &startingVector[i]);
           printf("\n");
 
           if (status != 1)
@@ -233,34 +234,38 @@ int main()
 
     double fx;
     double* x;
+    double* grad;
+    double* hessian_vecshaped;
     // Initialise End
 
     // Get common user-set parameters (dimension, domain, algorithm)
     dim = getDim();
     getDomain(domain);
     stepSize = getStep();
-    getStart(dim, domain, x)
+    getStart(dim, domain, x);
     algoSelector = getAlgo();
+    // ask for limit (no. of rounds for algo to run)
 
     // Allocate memory for array containing x values
-    x = malloc(dim * sizeof(double));
+    x = (double*) malloc(dim * sizeof(double));
+    grad = (double*) malloc(dim * sizeof(double));
+    hessian_vecshaped = (double*) malloc(dim*dim * sizeof(double));
 
     // Run gradient descent algorithms
     if (algoSelector == 1)
     {
-        while ()
-        //fx = valueandderivatives(2, x, grad, hessian_vecshaped) //have to see how to add gradient and hessian
-
 
         printf("domain = %lf \n", domain[0]);
         printf("%d, %d, %lf", dim, algoSelector, stepSize);
     }
     else if (algoSelector == 2)
     {
-        double initM[2] = {0};
-        stepSize = returnStepSize(stepSize);
-        alpha = returnAlpha(alpha);
-        printf("%d, %d, %lf, %lf", dim, algoSelector, stepSize, alpha);
+        al = getMomentum();
+        // double initM[2] = {0};
+        // initialize M for algorithm, calloc allocates 0 filled array
+        double* mArr = (double*) calloc(dim * sizeof(double));
+
+        printf("%d, %d, %lf, %lf", dim, algoSelector, stepSize, al);
     }
     else if (algoSelector == 3)
     {
@@ -272,4 +277,7 @@ int main()
         printf("Error has occured!\n");
         exit(1);
     }
+
+    // while below limit or never hit edge
+    //fx = valueandderivatives(2, x, grad, hessian_vecshaped) //have to see how to add gradient and hessian
 }
