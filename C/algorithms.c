@@ -1,29 +1,22 @@
-double* gradient_simple(double* x_vector[], double step, double* grad[]);
-double* gradient_momentum(double* x_vector[], double step, double* grad[], double* m[], double a);
-double* gradient_newton(double* x_vector[], double step, double* grad[], double *hessian_vecshaped);
+void gradient_simple(double *x, double step, double *grad){
+    unsigned int size = sizeof(x) / sizeof(x[0])
 
-
-double* gradient_simple(double* x_vector[], double step, double* grad[]){
-    for(int i=0; i<len(*x_vector); i++){
-        *x_vector[i] = *x_vector[i] - step * (*grad[i]);
+    for(int i = 0; i < size; i++){
+        x[i] = x[i] - step * (grad[i]);
     }
-
-    return x_vector;
-
 }
 
-double* gradient_momentum(double* x_vector[], double step, double* grad[], double* m[], double a){
-    for(int i=0; i<len(*x_vector); i++){
-        *m[i] = a * (*m[i]) + step * (*grad[i]);
-        *x_vector[i] = *x_vector[i] - *m[i];
-        
-    }
+void gradient_momentum(double *x, double *m, double step, double *grad, double a){
+    unsigned int size = sizeof(x) / sizeof(x[0])
 
-    return x_vector, m;
+    for(int i = 0; i < size; i++){
+        m[i] = a * (m[i]) + step * (grad[i]);
+        x[i] = x[i] - m[i];
+    }
 }
 
-double* gradient_newton(double* x_vector[], double step, double* grad[], double *hessian_vecshaped){
+void gradient_newton(double *x, double step, double *grad, double *hessian_vecshaped){
 
 
-    
+
 }

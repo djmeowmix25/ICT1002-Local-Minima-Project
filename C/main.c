@@ -1,10 +1,11 @@
 #include <string.h>
 #include <stdio.h>
 #include <ctype.h>
-//#include "beale.c"
-//#include "himmelblau.c"
-#include "matyas.c"
-//#include "algorithms.c"
+//#include "functions/beale2d.h"
+//#include "functions/himmelblau.h"
+//#include "functions/twominima.h"
+#include "functions/matyas.h"
+#include "algorithms.h"
 
 // Initialise Functions
 int returnInt(int dim);
@@ -139,7 +140,7 @@ int main()
         double domain[dim];
         double startingVector[dim];
         double fx;
-        
+
         double *domainPtr = returnDomain(domain);
         double *startingVectorPtr = returnStartingVector(dim, startingVector);
         //fx = valueandderivatives(2, x, grad, hessian_vecshaped) //have to see how to add gradient and hessian
