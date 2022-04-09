@@ -195,7 +195,7 @@ void getStart(int dim, double *domain, double *startingVector)
             }
             else if (startingVector[i] < domain[0] || startingVector[i] > domain[1])
             {
-                printf("ERROR: Value higher than specified domain of [%d, %d]\n",
+                printf("ERROR: Value higher than specified domain of [%lf, %lf]\n",
                        domain[0], domain[1]);
             }
             else
