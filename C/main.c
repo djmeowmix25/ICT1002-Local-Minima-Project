@@ -4,9 +4,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-
-
-
 /* CHOOSE 1 FUNCTION TO RUN FOR PROGRAM */
 #include "functions/beale2d.h"
 //#include "functions/himmelblau.h"
@@ -23,6 +20,7 @@ double getMomentum();
 double getEpsilon();
 void getDomain(double *domain);
 void getStartingVector(int dim, double *domain, double *startingVector);
+void checker(double *x, double *domain, double *grad, int dim);
 
 // Functions
 int getDim()
@@ -185,25 +183,26 @@ void getStart(int dim, double *domain, double *startingVector)
     int status;
     for (int i = 0; i < dim; i++)
     {
-        do {
-          printf("Please enter starting vector value x%d: \n", (i+1));
-          status = scanf("%lf", &startingVector[i]);
-          printf("\n");
+        do
+        {
+            printf("Please enter starting vector value x%d: \n", (i + 1));
+            status = scanf("%lf", &startingVector[i]);
+            printf("\n");
 
-          if (status != 1)
-          {
-              printf("ERROR: Please enter a real number\n");
-          }
-          else if (startingVector[i] < domain[0] || startingVector[i] > domain[1])
-          {
-              printf("ERROR: Value higher than specified domain of [%d, %d]\n",
-              domain[0], domain[1]);
-          }
-          else
-          {
-              break;
-          }
-        } while(1);
+            if (status != 1)
+            {
+                printf("ERROR: Please enter a real number\n");
+            }
+            else if (startingVector[i] < domain[0] || startingVector[i] > domain[1])
+            {
+                printf("ERROR: Value higher than specified domain of [%d, %d]\n",
+                       domain[0], domain[1]);
+            }
+            else
+            {
+                break;
+            }
+        } while (1);
     }
 }
 // define checker in C
@@ -226,6 +225,31 @@ void getStart(int dim, double *domain, double *startingVector)
 //         print("Two or more")
 //         exit()
 
+void checker(double *x, double *domain, double *grad, int dim){
+    int counter = 0;
+    for (int i = 0 ; i<dim ; i++){
+        if (x[i] <= domain [0]){
+            counter = counter + 1;
+            if (grad[i] > 0){
+                printf("Terminated x hit lower domain");
+                exit(1);
+            }
+        }
+        else if (x[i] >= domain[1]){
+            counter = counter + 1;
+            double tempGrad = -1 * grad[i];
+            if (tempGrad > 0){
+                printf("Terminated x hit upper domain");
+                exit(1);
+            }
+        }
+    }
+    if(counter >= 2){
+        printf("Two or more");
+        exit(1);
+    }
+}
+
 int main()
 {
     // Initialise Value
@@ -235,50 +259,74 @@ int main()
     double stepSize;
     double al;
     double epsilon;
+    double lowest = 9999999999;
 
     double fx;
-    double* x;
-    double* grad;
-    double* hessian_vecshaped;
+    double *x;
+    double *grad;
+    double *hessian_vecshaped;
     // Initialise End
+
+    // Allocate memory for array containing x values
+    x = (double *)malloc(dim * sizeof(double));
+    grad = (double *)malloc(dim * sizeof(double));
+    hessian_vecshaped = (double *)malloc(dim * dim * sizeof(double));
+    
 
     // Get common user-set parameters (dimension, domain, algorithm)
     dim = getDim();
     getDomain(domain);
     getStart(dim, domain, x);
     algoSelector = getAlgo();
+    
     // ask for limit (no. of rounds for algo to run)
 
-    // Allocate memory for array containing x values
-    x = (double*) malloc(dim * sizeof(double));
-    grad = (double*) malloc(dim * sizeof(double));
-    hessian_vecshaped = (double*) malloc(dim*dim * sizeof(double));
 
     // Run gradient descent algorithms
     if (algoSelector == 1)
     {
         stepSize = getStep();
-        int counter = 1 ;
-        while(counter == 1){
-            fx = valueandderivatives(2, x, grad, hessian_vecshaped);
-            gradient_simple(x, stepSize, grad);
-
-            printf("x1:%lf x2:%lf grad%lf fx:%lf \n", x[0], x[1], grad[0], fx );
-            sleep(1);
+        while (1)
+        {
+            checker(x, domain, grad, dim);
+            fx = valueandderivatives(dim, x, grad, hessian_vecshaped); // Replace this with appropriate line from function
+            gradient_simple(x, stepSize, grad, dim);
+            if (fx < lowest){
+                lowest = fx ;
+            }
+            else{
+                printf("Local Minima is near x1:%lf , x2:%lf", x[0], x[1]);
+                break;
+            }
+            printf("x1:%lf x2:%lf grad%lf fx:%lf \n", x[0], x[1], grad[0], fx);
+            
         }
-
-        // printf("domain = %lf \n", domain[0]);
-        // printf("%d, %d, %lf", dim, algoSelector, stepSize);
     }
     else if (algoSelector == 2)
     {
         stepSize = getStep();
-        //al = getMomentum();
-        // double initM[2] = {0};
-        // initialize M for algorithm, calloc allocates 0 filled array
-        //double* mArr = (double*) calloc(dim * sizeof(double));
+        al = getMomentum();
+        //  initialize M for algorithm, calloc allocates 0 filled array
+        double* mArr = (double*) malloc(dim * sizeof(double));
+        for (int i = 0; i<dim; i++){
+            mArr[i] = 0;
+        }
 
-        printf("%d, %d, %lf, %lf", dim, algoSelector, stepSize, al);
+        while (1)
+        {
+            checker(x, domain, grad, dim);
+            fx = valueandderivatives(dim, x, grad, hessian_vecshaped);
+            gradient_momentum(x, mArr, stepSize, grad, al, dim);
+            if (fx < lowest){
+                lowest = fx ;
+            }
+            else{
+                printf("Local Minima is near x1:%lf , x2:%lf", x[0], x[1]);
+                break;
+            }
+            printf("x1:%lf x2:%lf grad%lf fx:%lf \n", x[0], x[1], grad[0], fx);
+            
+        }
     }
     else if (algoSelector == 3)
     {
@@ -292,5 +340,5 @@ int main()
     }
 
     // while below limit or never hit edge
-    //fx = valueandderivatives(2, x, grad, hessian_vecshaped) //have to see how to add gradient and hessian
+    // fx = valueandderivatives(2, x, grad, hessian_vecshaped) //have to see how to add gradient and hessian
 }

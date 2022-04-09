@@ -5,18 +5,17 @@
 
 
 
-void gradient_simple(double *x, double step, double *grad){
-    unsigned int size = sizeof(x) / sizeof(x[0]);
+void gradient_simple(double *x, double step, double *grad, int dim){
+    //unsigned int size = sizeof(x) / sizeof(x[0]);
 
-    for(int i = 0; i < size; i++){
+    for(int i = 0; i < dim; i++){
         x[i] = x[i] - step * (grad[i]);
     }
 }
 
-void gradient_momentum(double *x, double *m, double step, double *grad, double al){
-    unsigned int size = sizeof(x) / sizeof(x[0]);
+void gradient_momentum(double *x, double *m, double step, double *grad, double al, int dim){
 
-    for(int i = 0; i < size; i++){
+    for(int i = 0; i < dim; i++){
         m[i] = al * (m[i]) + step * (grad[i]);
         x[i] = x[i] - m[i];
     }
