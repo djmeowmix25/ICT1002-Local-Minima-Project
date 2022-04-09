@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include <unistd.h>
+
 
 
 
@@ -256,9 +258,17 @@ int main()
     if (algoSelector == 1)
     {
         stepSize = getStep();
+        int counter = 1 ;
+        while(counter == 1){
+            fx = valueandderivatives(2, x, grad, hessian_vecshaped);
+            gradient_simple(x, stepSize, grad);
 
-        printf("domain = %lf \n", domain[0]);
-        printf("%d, %d, %lf", dim, algoSelector, stepSize);
+            printf("x1:%lf x2:%lf grad%lf fx:%lf \n", x[0], x[1], grad[0], fx );
+            sleep(1);
+        }
+
+        // printf("domain = %lf \n", domain[0]);
+        // printf("%d, %d, %lf", dim, algoSelector, stepSize);
     }
     else if (algoSelector == 2)
     {
