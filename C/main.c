@@ -1,6 +1,9 @@
 #include <string.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <stdlib.h>
+
+
 
 /* CHOOSE 1 FUNCTION TO RUN FOR PROGRAM */
 #include "functions/beale2d.h"
@@ -16,8 +19,8 @@ int getAlgo();
 double getStep();
 double getMomentum();
 double getEpsilon();
-void getDomain(int *domain);
-void getStartingVector(int dim, int *domain, double *startingVector);
+void getDomain(double *domain);
+void getStartingVector(int dim, double *domain, double *startingVector);
 
 // Functions
 int getDim()
@@ -28,7 +31,6 @@ int getDim()
     {
         printf("Please input a dimension:\n");
         status = scanf("%d", &dim);
-        printf("\n");
 
         if (status != 1)
         {
@@ -149,16 +151,16 @@ double getEpsilon()
     } while (1);
 }
 
-void getDomain(int *domain)
+void getDomain(double *domain)
 {
-    int status1;
-    int status2;
+    double status1;
+    double status2;
     do
     {
         printf("Please enter the domain inclusive from: \n");
-        status1 = scanf("%d", &domain[0]);
+        status1 = scanf("%lf", &domain[0]);
         printf("Please enter the domain inclusive to: \n");
-        status2 = scanf("%d", &domain[1]);
+        status2 = scanf("%lf", &domain[1]);
         printf("\n");
 
         if (status1 != 1 || status2 != 1)
@@ -176,7 +178,7 @@ void getDomain(int *domain)
     } while (1);
 }
 
-void getStart(int dim, int *domain, double *startingVector)
+void getStart(int dim, double *domain, double *startingVector)
 {
     int status;
     for (int i = 0; i < dim; i++)
@@ -227,7 +229,7 @@ int main()
     // Initialise Value
     int dim;
     int algoSelector;
-    int domain[2];
+    double domain[2];
     double stepSize;
     double al;
     double epsilon;
@@ -241,7 +243,6 @@ int main()
     // Get common user-set parameters (dimension, domain, algorithm)
     dim = getDim();
     getDomain(domain);
-    stepSize = getStep();
     getStart(dim, domain, x);
     algoSelector = getAlgo();
     // ask for limit (no. of rounds for algo to run)
@@ -254,22 +255,24 @@ int main()
     // Run gradient descent algorithms
     if (algoSelector == 1)
     {
+        stepSize = getStep();
 
         printf("domain = %lf \n", domain[0]);
         printf("%d, %d, %lf", dim, algoSelector, stepSize);
     }
     else if (algoSelector == 2)
     {
-        al = getMomentum();
+        stepSize = getStep();
+        //al = getMomentum();
         // double initM[2] = {0};
         // initialize M for algorithm, calloc allocates 0 filled array
-        double* mArr = (double*) calloc(dim * sizeof(double));
+        //double* mArr = (double*) calloc(dim * sizeof(double));
 
         printf("%d, %d, %lf, %lf", dim, algoSelector, stepSize, al);
     }
     else if (algoSelector == 3)
     {
-        epsilon = returnEpsilon(epsilon);
+        epsilon = getEpsilon();
         printf("%d, %d, %lf", dim, algoSelector, epsilon);
     }
     else

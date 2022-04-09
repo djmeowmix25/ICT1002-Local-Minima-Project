@@ -1,3 +1,10 @@
+#include <string.h>
+#include <stdio.h>
+#include <ctype.h>
+#include <stdlib.h>
+
+
+
 double valueonly(int dim, double *x)
 {
   if (dim !=2)
