@@ -1,7 +1,4 @@
-#include <string.h>
-#include <stdio.h>
-#include <ctype.h>
-#include <stdlib.h>
+#include "himmelblau.h"
 
 double valueonly(int dim, double *x)
 {

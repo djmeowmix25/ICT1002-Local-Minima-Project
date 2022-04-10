@@ -225,26 +225,33 @@ void getStart(int dim, double *domain, double *startingVector)
 //         print("Two or more")
 //         exit()
 
-void checker(double *x, double *domain, double *grad, int dim){
+void checker(double *x, double *domain, double *grad, int dim)
+{
     int counter = 0;
-    for (int i = 0 ; i<dim ; i++){
-        if (x[i] <= domain [0]){
+    for (int i = 0; i < dim; i++)
+    {
+        if (x[i] <= domain[0])
+        {
             counter = counter + 1;
-            if (grad[i] > 0){
+            if (grad[i] > 0)
+            {
                 printf("Terminated x hit lower domain");
                 exit(1);
             }
         }
-        else if (x[i] >= domain[1]){
+        else if (x[i] >= domain[1])
+        {
             counter = counter + 1;
             double tempGrad = -1 * grad[i];
-            if (tempGrad > 0){
+            if (tempGrad > 0)
+            {
                 printf("Terminated x hit upper domain");
                 exit(1);
             }
         }
     }
-    if(counter >= 2){
+    if (counter >= 2)
+    {
         printf("Two or more");
         exit(1);
     }
@@ -266,7 +273,7 @@ int main()
     double *grad;
     double *hessian_vecshaped;
     // Initialise End
-    
+
     // Get common user-set parameters (dimension, domain, algorithm)
     dim = getDim();
 
@@ -279,7 +286,6 @@ int main()
     getStart(dim, domain, x);
     algoSelector = getAlgo();
 
-
     // Run gradient descent algorithms
     if (algoSelector == 1)
     {
@@ -289,15 +295,16 @@ int main()
             checker(x, domain, grad, dim);
             fx = valueandderivatives(dim, x, grad, hessian_vecshaped); // Replace this with appropriate line from function
             gradient_simple(x, stepSize, grad, dim);
-            if (fx < lowest){
-                lowest = fx ;
+            printf("x1:%lf x2:%lf grad%lf fx:%lf \n", x[0], x[1], grad[0], fx);
+            if (fx < lowest)
+            {
+                lowest = fx;
             }
-            else{
+            else
+            {
                 printf("Local Minima is near x1:%lf , x2:%lf", x[0], x[1]);
                 break;
             }
-            printf("x1:%lf x2:%lf grad%lf fx:%lf \n", x[0], x[1], grad[0], fx);
-            
         }
     }
     else if (algoSelector == 2)
@@ -305,8 +312,9 @@ int main()
         stepSize = getStep();
         al = getMomentum();
         //  initialize M for algorithm, calloc allocates 0 filled array
-        double* mArr = (double*) malloc(dim * sizeof(double));
-        for (int i = 0; i<dim; i++){
+        double *mArr = (double *)malloc(dim * sizeof(double));
+        for (int i = 0; i < dim; i++)
+        {
             mArr[i] = 0;
         }
 
@@ -315,34 +323,38 @@ int main()
             checker(x, domain, grad, dim);
             fx = valueandderivatives(dim, x, grad, hessian_vecshaped);
             gradient_momentum(x, mArr, stepSize, grad, al, dim);
-            if (fx < lowest){
-                lowest = fx ;
+            printf("x1:%lf x2:%lf grad%lf fx:%lf \n", x[0], x[1], grad[0], fx);
+            if (fx < lowest)
+            {
+                lowest = fx;
             }
-            else{
+            else
+            {
                 printf("Local Minima is near x1:%lf , x2:%lf", x[0], x[1]);
                 break;
             }
-            printf("x1:%lf x2:%lf grad%lf fx:%lf \n", x[0], x[1], grad[0], fx);
-            
         }
     }
     else if (algoSelector == 3)
     {
         epsilon = getEpsilon();
-        while (1)
+        int counter = 0;
+        while (counter < 99999)
         {
             checker(x, domain, grad, dim);
             fx = valueandderivatives(dim, x, grad, hessian_vecshaped);
             gradient_newton(x, grad, hessian_vecshaped, epsilon, dim);
-            if (fx < lowest){
-                lowest = fx ;
+            printf("x1:%lf x2:%lf grad%lf fx:%lf \n", x[0], x[1], grad[0], fx);
+            if (fx < lowest)
+            {
+                lowest = fx;
             }
-            else{
+            else
+            {
                 printf("Local Minima is near x1:%lf , x2:%lf", x[0], x[1]);
                 break;
             }
-            printf("x1:%lf x2:%lf grad%lf fx:%lf \n", x[0], x[1], grad[0], fx);
-            
+            counter = counter + 1;
         }
     }
     else
