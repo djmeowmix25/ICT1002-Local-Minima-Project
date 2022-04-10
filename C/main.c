@@ -5,10 +5,10 @@
 #include <unistd.h>
 
 /* CHOOSE 1 FUNCTION TO RUN FOR PROGRAM */
-#include "functions/beale2d.h"
-//#include "functions/himmelblau.h"
-//#include "functions/twominima.h"
-//#include "functions/matyas.h"
+#include "functions/beale2d.h" // boundary: -4.5 4.5 | minima:3,0.5
+//#include "functions/himmelblau.h" // boundary: -5 5 | minima:3,2 -2.805,3.13 -3.779,-3.823 3.584,-8.
+//#include "functions/twominima.h" // boundary: -1,1 | minima: 0.5, 0.5 0,0
+//#include "functions/matyas.h" // boundary: -10 10 | minima:0,0
 
 #include "algorithms.h"
 
@@ -266,20 +266,18 @@ int main()
     double *grad;
     double *hessian_vecshaped;
     // Initialise End
+    
+    // Get common user-set parameters (dimension, domain, algorithm)
+    dim = getDim();
 
     // Allocate memory for array containing x values
     x = (double *)malloc(dim * sizeof(double));
     grad = (double *)malloc(dim * sizeof(double));
     hessian_vecshaped = (double *)malloc(dim * dim * sizeof(double));
-    
 
-    // Get common user-set parameters (dimension, domain, algorithm)
-    dim = getDim();
     getDomain(domain);
     getStart(dim, domain, x);
     algoSelector = getAlgo();
-    
-    // ask for limit (no. of rounds for algo to run)
 
 
     // Run gradient descent algorithms
@@ -331,7 +329,21 @@ int main()
     else if (algoSelector == 3)
     {
         epsilon = getEpsilon();
-        printf("%d, %d, %lf", dim, algoSelector, epsilon);
+        while (1)
+        {
+            checker(x, domain, grad, dim);
+            fx = valueandderivatives(dim, x, grad, hessian_vecshaped);
+            gradient_newton(x, grad, hessian_vecshaped, epsilon, dim);
+            if (fx < lowest){
+                lowest = fx ;
+            }
+            else{
+                printf("Local Minima is near x1:%lf , x2:%lf", x[0], x[1]);
+                break;
+            }
+            printf("x1:%lf x2:%lf grad%lf fx:%lf \n", x[0], x[1], grad[0], fx);
+            
+        }
     }
     else
     {
