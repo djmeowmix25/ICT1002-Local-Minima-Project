@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdbool.h>
 
 /* TEST FUNCTIONS AVAILABLE */
 //beale2d     boundary: -4.5 4.5 | minima: 3 0.5
@@ -16,6 +17,8 @@
 #include "algorithms.c"
 #include "linspace.c"
 
+#define BUFFER_SIZE 4096
+
 // Function declarations
 int getDim();
 int getAlgo();
@@ -23,34 +26,94 @@ int getRounds();
 double getStep();
 double getMomentum();
 double getEpsilon();
+bool parse_int(char *string, int *integer);
 void getDomain(double *domain);
 void getStartingVector(int dim, double *domain, double *startingVector);
 int checker(double *x, double *domain, double *grad, int dim);
 
 // Functions
-int getDim()
+// Validation for integer input
+bool parse_int(char *string, int *integer)
 {
+    // Check for whitespace
+    int i = 0;
+    while (isspace(string[i])){
+        i++;
+    } 
+    int length = strlen(string);
+  
+    if (length == i) {
+        return false;
+    }
+  char integer_buffer[BUFFER_SIZE];
+  int integer_chars = 0;
+  
+  // If negative integer, got dash -
+  if (string[i] == '-')
+  {
+    integer_buffer[integer_chars] = '-';
+    integer_chars++;
+    i++;
+    
+    if (!isdigit(string[i])) {
+        return false;
+    }
+  }
+  
+  while (i < length && !isspace(string[i]))
+  {
+    if (!isdigit(string[i])){
+        return false;
+    }
+    
+    
+    integer_buffer[integer_chars] = string[i];
+    integer_chars++;
+    i++;
+  }
+  
+  integer_buffer[integer_chars] = '\0';
+  
+  while (isspace(string[i])){
+      i++;
+    }
+  
+  if (string[i] != '\0') {
+      return false;
+    }
+  *integer = atoi(integer_buffer);
+  
+  return true;
+}
+
+int getDim()
+{   
+    char buffer[BUFFER_SIZE];
     int status;
-    int dim;
+    int dim = 0;
+    bool parsed_correct = true;
     do
     {
         printf("Please input a dimension:\n");
-        status = scanf("%d", &dim);
-
-        if (status != 1)
+        // status = scanf("%d", &dim);
+        fgets(buffer, BUFFER_SIZE, stdin);
+        parsed_correct = parse_int(buffer, &dim);
+        if (parsed_correct != 1)
         {
             printf("ERROR: Please enter an integer!\n");
+            parsed_correct = false;
         }
         else if (dim < 2 || dim > 10)
         {
             printf("ERROR: Please chose a value between 2 and 10\n");
+            parsed_correct = false;
         }
         else
         {
             printf("\n");
             return dim;
         }
-    } while (1);
+    } while (!parsed_correct);
 }
 
 int getAlgo()
@@ -452,6 +515,8 @@ int main()
         printf("NOTICE:\n3d.txt contains values for plotting surface diagram in matplotlib\n");
         printf("steps.txt contains values for path taken by algorithm\n");
         printf("Run visualization.py to visualize the data with matplotlib\n");
+        printf("Press Enter to continue...");
+        getchar();
     }
     fclose (f3d);
 }
