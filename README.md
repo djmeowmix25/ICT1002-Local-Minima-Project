@@ -4,7 +4,7 @@ Program to get local minima of functions using 3 different algorithms :)
 ```
 git clone git@github.com:djmeowmix25/ICT1002_Local_Minima.git
 
-cd SpiGEx
+cd ICT1002_Local_Minima
 ```
 ### Linux/macOS
 ```
