@@ -4,8 +4,8 @@ import pickle
 #import matplotlib.pyplot as plt
 
 ### CHOOSE 1 TO IMPORT, COMMENT OUT THE REST
-#from beale2d import valueandderivatives, valueonly
-from matyas import valueandderivatives, valueonly
+from beale2d import valueandderivatives, valueonly
+#from matyas import valueandderivatives, valueonly
 #from himmelblau import valueandderivatives, valueonly
 #from twominima import valueandderivatives, valueonly
 
@@ -74,11 +74,11 @@ def main():
     #x = [3, 0.5]
 
     # set by user
-    step = 0.001 # step
+    step = 0.00001 # step
     a = 0.5 # moment
-    x = [-5, 6] # starting vector
-    domain = [-10, 10] # domain
-    epsilon  = 0.01 # epsilon
+    x = [3, 3] # starting vector
+    domain = [-4.5, 4.5] # domain
+    epsilon  = 0.0005 # epsilon
 
     # used by algo
     m = [0,0] # gradient momentum
@@ -100,26 +100,25 @@ def main():
     with open("3d.txt", "ab") as f:
         pickle.dump([X, Y, Z], f)
 
-    from mpl_toolkits import mplot3d
 
-    import matplotlib.pyplot as plt
-    fig = plt.figure()
-    ax = plt.axes(projection='3d')
-    ax.plot_surface(X, Y, Z, rstride=1, cstride=1,
-                    cmap='viridis', edgecolor='none')
-    ax.set_title('surface');
-    plt.show()
     counter = 0
-    while(counter < 1000):
+    x_arr = []
+    y_arr = []
+    z_arr = []
+    ep = 0 # for plotting line above surface graph to be visible
+    while(counter < 10000):
         fx = valueandderivatives(2, x, grad, hessian_vecshaped)
 
         # ALGORITHMS, CHOOSE 1
-        #x = gradient_newton(x, hessian_vecshaped, epsilon, grad)
-        x, m = gradient_momentum(x, m, a, step, grad)
+        x = gradient_newton(x, hessian_vecshaped, epsilon, grad)
+        #x, m = gradient_momentum(x, m, a, step, grad)
         #x = gradient_simple(x, step, grad)
 
         print(f"f(x): {fx}\tx1: {x[0]}\tx2: {x[1]}\tGrad1: {grad[0]}\tGrad2: {grad[1]}")
         checker(x, domain, grad)
+        x_arr.append(x[0])
+        y_arr.append(x[1])
+        z_arr.append(fx+ep)
 
         with open("steps.txt", "a") as f:
             #f.write(f'f(x): {round(fx, 5)}\tx1: {round(x[0], 5)}\tx2: {round(x[1], 5)}\t\n')
@@ -132,6 +131,18 @@ def main():
         # else:
         #     break
         #time.sleep(0.01)
+    c_arr = np.array(x_arr) + np.array(y_arr)
+    from mpl_toolkits import mplot3d
+
+    import matplotlib.pyplot as plt
+    fig = plt.figure()
+    ax = plt.axes(projection='3d')
+    ax.plot_surface(X, Y, Z, rstride=1, cstride=1,
+                    cmap='viridis', edgecolor='none')
+    ax.plot(x_arr, y_arr, z_arr, 'ro', alpha=0.5)
+    # ax.scatter(x_arr, y_arr, z_arr, c = c_arr)
+    ax.set_title('surface')
+    plt.show()
 
 
 
