@@ -6,10 +6,10 @@
 #include <stdbool.h>
 
 /* TEST FUNCTIONS AVAILABLE */
-//beale2d     boundary: -4.5 4.5 | minima: 3 0.5
-//himmelblau  boundary: -5 5 | minima: 3 2 , -2.805 3.13, -3.779 -3.283 , 3.584 -1.848
-//twominima   boundary: -1 1 | minima: 0.5 0.5 , 0 0
-//matyas      boundary: -10 10 | minima: 0 0
+// beale2d     boundary: -4.5 4.5 | minima: 3 0.5
+// himmelblau  boundary: -5 5 | minima: 3 2 , -2.805 3.13, -3.779 -3.283 , 3.584 -1.848
+// twominima   boundary: -1 1 | minima: 0.5 0.5 , 0 0
+// matyas      boundary: -10 10 | minima: 0 0
 
 /* PUT OTHER FUNCTION FILES UNDER functions/ FOLDER, INCLUDE FILE WHEN COMPILING */
 /* e.g. gcc -Wall functions/beale2d.c main.c -o main */
@@ -37,57 +37,62 @@ bool parse_int(char *string, int *integer)
 {
     // Check for whitespace
     int i = 0;
-    while (isspace(string[i])){
+    while (isspace(string[i]))
+    {
         i++;
-    } 
+    }
     int length = strlen(string);
-  
-    if (length == i) {
+
+    if (length == i)
+    {
         return false;
     }
-  char integer_buffer[BUFFER_SIZE];
-  int integer_chars = 0;
-  
-  // If negative integer, got dash -
-  if (string[i] == '-')
-  {
-    integer_buffer[integer_chars] = '-';
-    integer_chars++;
-    i++;
-    
-    if (!isdigit(string[i])) {
+    char integer_buffer[BUFFER_SIZE];
+    int integer_chars = 0;
+
+    // If negative integer, got dash -
+    if (string[i] == '-')
+    {
+        integer_buffer[integer_chars] = '-';
+        integer_chars++;
+        i++;
+
+        if (!isdigit(string[i]))
+        {
+            return false;
+        }
+    }
+
+    while (i < length && !isspace(string[i]))
+    {
+        if (!isdigit(string[i]))
+        {
+            return false;
+        }
+
+        integer_buffer[integer_chars] = string[i];
+        integer_chars++;
+        i++;
+    }
+
+    integer_buffer[integer_chars] = '\0';
+
+    while (isspace(string[i]))
+    {
+        i++;
+    }
+
+    if (string[i] != '\0')
+    {
         return false;
     }
-  }
-  
-  while (i < length && !isspace(string[i]))
-  {
-    if (!isdigit(string[i])){
-        return false;
-    }
-    
-    
-    integer_buffer[integer_chars] = string[i];
-    integer_chars++;
-    i++;
-  }
-  
-  integer_buffer[integer_chars] = '\0';
-  
-  while (isspace(string[i])){
-      i++;
-    }
-  
-  if (string[i] != '\0') {
-      return false;
-    }
-  *integer = atoi(integer_buffer);
-  
-  return true;
+    *integer = atoi(integer_buffer);
+
+    return true;
 }
 
 int getDim()
-{   
+{
     char buffer[BUFFER_SIZE];
     int status;
     int dim = 0;
@@ -367,8 +372,8 @@ int main()
     double stepSize;
     double al;
     double epsilon;
-    FILE* fs = fopen ("steps.txt", "w");
-    FILE* f3d = fopen ("3d.txt", "w");
+    FILE *fs = fopen("steps.txt", "w");
+    FILE *f3d = fopen("3d.txt", "w");
     double xLinArr[50]; // array used to store x values after linspace
 
     double fx;
@@ -403,19 +408,19 @@ int main()
     getStart(dim, domain, x);
 
     // Get algorithm specific user-set parameters (step size, momentum, epsilon)
-    switch(algoSelector)
+    switch (algoSelector)
     {
-      case 1:
+    case 1:
         stepSize = getStep();
         break;
-      case 2:
+    case 2:
         stepSize = getStep();
         al = getMomentum();
         break;
-      case 3:
+    case 3:
         epsilon = getEpsilon();
         break;
-      default:
+    default:
         printf("Error has occured!\n");
         exit(1);
     }
@@ -425,18 +430,18 @@ int main()
     {
         fx = valueandderivatives(dim, x, grad, hessian_vecshaped);
         // Run algorithm based on choice
-        switch(algoSelector)
+        switch (algoSelector)
         {
-          case 1:
+        case 1:
             gradient_simple(x, stepSize, grad, dim);
             break;
-          case 2:
+        case 2:
             gradient_momentum(x, mArr, stepSize, grad, al, dim);
             break;
-          case 3:
+        case 3:
             gradient_newton(x, grad, hessian_vecshaped, epsilon, dim);
             break;
-          default:
+        default:
             printf("Error has occured!\n");
             exit(1);
         }
@@ -461,18 +466,18 @@ int main()
         // Print x values
         for (int i = 0; i < dim; i++)
         {
-          if (i == 0)
-          {
-              printf("[%lf, ", x[i]);
-          }
-          else if (i == dim - 1)
-          {
-              printf("%lf] = %lf\n", x[i], fx);
-          }
-          else
-          {
-              printf("%lf, ", x[i]);
-          }
+            if (i == 0)
+            {
+                printf("[%lf, ", x[i]);
+            }
+            else if (i == dim - 1)
+            {
+                printf("%lf] = %lf\n", x[i], fx);
+            }
+            else
+            {
+                printf("%lf, ", x[i]);
+            }
         }
         // Output to steps.txt if dim = 2
         if (dim == 2)
@@ -484,20 +489,20 @@ int main()
     printf("Local minima is near ");
     for (int i = 0; i < dim; i++)
     {
-      if (i == 0)
-      {
-          printf("[%lf, ", x[i]);
-      }
-      else if (i == dim - 1)
-      {
-          printf("%lf]\n", x[i]);
-      }
-      else
-      {
-          printf("%lf, ", x[i]);
-      }
+        if (i == 0)
+        {
+            printf("[%lf, ", x[i]);
+        }
+        else if (i == dim - 1)
+        {
+            printf("%lf]\n", x[i]);
+        }
+        else
+        {
+            printf("%lf, ", x[i]);
+        }
     }
-    fclose (fs);
+    fclose(fs);
 
     // Generate values for plotting surface diagram in matplotlib
     if (dim == 2)
@@ -515,8 +520,6 @@ int main()
         printf("NOTICE:\n3d.txt contains values for plotting surface diagram in matplotlib\n");
         printf("steps.txt contains values for path taken by algorithm\n");
         printf("Run visualization.py to visualize the data with matplotlib\n");
-        printf("Press Enter to continue...");
-        getchar();
     }
-    fclose (f3d);
+    fclose(f3d);
 }
