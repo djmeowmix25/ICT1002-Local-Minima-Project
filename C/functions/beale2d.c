@@ -1,3 +1,5 @@
+#include "himmelblau.h"
+
 double valueonly(int dim, double *x)
 {
   if (dim !=2)

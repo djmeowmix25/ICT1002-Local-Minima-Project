@@ -38,7 +38,7 @@ double valueandderivatives(int dim, double *x , double* grad,
 
   double ret  = valueonly(dim, x);
 
-  double p1,p2;
+  double p1,p2,p3,p4;
 
   // gradient
   p1 =  exp(-10 * pow((x[0] - 0.5), 2) - 10 * pow((x[1] - 0.5), 2));
@@ -46,8 +46,8 @@ double valueandderivatives(int dim, double *x , double* grad,
   p3 = x[0] - 0.5;
   p4 = x[1] - 0.5;
 
-  grad[0] = 20 * 0.3 * p1 * p3 + 20 * 0.7 * p2 * x[0]
-  grad[1] = 20 * 0.3 * p1 * p4 + 20 * 0.7 * p2 * x[1]
+  grad[0] = 20 * 0.3 * p1 * p3 + 20 * 0.7 * p2 * x[0];
+  grad[1] = 20 * 0.3 * p1 * p4 + 20 * 0.7 * p2 * x[1];
 
   // hessian
   hessian_vecshaped[0+2*0] = -20 * 20 * 0.3 * p1 * pow(p3, 2) + 20 * 0.3 * p1 + - 20 * 20 * 0.7 * p2 * pow(x[0], 2) + 20 * 0.7 * p2;

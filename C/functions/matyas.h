@@ -1,7 +1,9 @@
 #ifndef matyas_h
 #define matyas_h
 
+#include <string.h>
 #include <stdio.h>
+#include <ctype.h>
 #include <stdlib.h>
 
 double valueonly(int dim, double *x);
