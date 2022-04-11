@@ -35,7 +35,7 @@ ax.plot_surface(np.array(X), np.array(Y), np.array(Z), rstride=1, cstride=1, cma
 ax.plot(xx, yy, zz, 'ro', alpha=0.5)
 ax.set_title('Function with path (red) to local minima')
 
-# Number of interations against fx value
+# Number of iterations against fx value
 ax = fig.add_subplot(2, 1, 2)
 ax.plot(range(len(zz)), zz)
 
