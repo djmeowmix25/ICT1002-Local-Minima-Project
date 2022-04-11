@@ -1,5 +1,5 @@
 # ICT1002_Local_Minima
-Program to get local minima of functions using 3 different algorithms :)
+Program to get local minima of functions using 3 different algorithms in C :)
 ## Installation
 ```
 git clone git@github.com:djmeowmix25/ICT1002_Local_Minima.git
