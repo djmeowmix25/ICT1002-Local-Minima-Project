@@ -2,12 +2,10 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include "functions/inverter.c"
+#include "inverter.c"
 
 void gradient_simple(double *x, double step, double *grad, int dim)
 {
-    // unsigned int size = sizeof(x) / sizeof(x[0]);
-
     for (int i = 0; i < dim; i++)
     {
         x[i] = x[i] - step * (grad[i]);
@@ -59,7 +57,7 @@ void gradient_newton(double *x, double *grad, double *hessian_vecshaped, double 
     for (int i = 0; i < dim ; i++)
     {
         for (int j = 0 ; j<dim ; j++){
-            result[i] = result[i] + matrixArray[i][j] * grad[j]; 
+            result[i] = result[i] + matrixArray[i][j] * grad[j];
         }
     }
 

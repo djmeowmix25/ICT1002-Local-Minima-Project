@@ -1,3 +1,6 @@
+#include "function.h"
+#include <math.h>
+
 double valueonly(int dim, double *x)
 {
   if (dim !=2)
@@ -9,7 +12,7 @@ double valueonly(int dim, double *x)
   double p1,p2;
 
   p1 = -0.3 * exp(-10 * pow((x[0] - 0.5), 2) - 10 * pow((x[1] - 0.5), 2));
-  p2 = 0.7 * exp(-10 * pow(x[0], 2) - 10 * pow(x[1], 2);
+  p2 = 0.7 * exp(-10 * pow(x[0], 2) - 10 * pow(x[1], 2));
 
   double ret = p1-p2;
 

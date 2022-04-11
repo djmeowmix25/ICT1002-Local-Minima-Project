@@ -1,8 +1,7 @@
-#ifndef beale2d_h
-#define beale2d_h
-#include <string.h>
+#ifndef function_h
+#define function_h
+
 #include <stdio.h>
-#include <ctype.h>
 #include <stdlib.h>
 
 double valueonly(int dim, double *x);

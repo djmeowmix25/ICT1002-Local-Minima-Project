@@ -1,5 +1,4 @@
-#include "himmelblau.h"
-
+#include "function.h"
 
 double valueonly(int dim, double *x)
 {
